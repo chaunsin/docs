@@ -22,9 +22,14 @@
 ### 1.evm系列的合约地址大小写问题
 
 在ethereum中，合约地址的大小写不敏感，但是一些工具和库可能会要求地址的大小写与实际一致,存储大小写需要根据实际情况考虑。例如:
-`0x5A0b54D5dc17e0AadC383D2DbA4BEEefDee7074F`
-和 `0x5a0b54d5dc17e0aadC383D2DbA4BEEefDee7074f`视为同一个地址。
+`0xc98F67966c2263EC4cbB5437dF2C3E58f0C8bfab`
+和 `0xc98f67966c2263ec4cbb5437df2c3e58f0c8bfab`视为同一个地址。
 因此在实际使用场景中会存在地址大小写不匹配的问题，在开发过程中接口参数处理,或者入库处理需要统一处理一下。比如对地址ToLower()
 或ToUpper()。
 
-那么如果不转换直接写入到mysql库中,sql查询对大小写敏感么？答是视情况而定，如果mysql得数据库字符集是utf8mb4_general_ci,则不区分大小写,如果是其他得比如utf8_bin、utf8mb4_bin等则区分大小写。  
+那么如果不转换直接写入到mysql库中,sql查询对大小写敏感么？答是视情况而定，如果mysql得数据库字符集是utf8mb4_general_ci,则不区分大小写,如果是其他得比如utf8_bin、utf8mb4_bin等则区分大小写。
+
+**场景：**
+需求根据用户evm地址缓存用户今日订单数量。由于redis是对大小写敏感的，比如缓存的key是`0xc98F67966c2263EC4cbB5437dF2C3E58f0C8bfab`
+,但是在查询的时候使用得地址是`0xc98f67966c2263ec4cbb5437df2c3e58f0c8bfab`
+,这就造成了数据未找到，因此在使用得时候对key进行统一转换处理,比如ToLower(address)。
