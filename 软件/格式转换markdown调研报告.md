@@ -75,7 +75,7 @@
 
 # LibreOffice使用
 
-libreoffice是一个免费切开源的产品，支持多种文件格式相互之间转换。
+libreoffice是一个免费且开源的产品，支持多种文件格式相互之间转换。
 
 https://zh-cn.libreoffice.org/
 
