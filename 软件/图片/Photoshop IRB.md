@@ -7,13 +7,22 @@
 Photoshop IRB 是也是一种用于存储图像数据的文件格式。通常只适用于jpg文件中得APP13段中。
 ，其他文件格式比如png、webp等如果想存储Photoshop公司规则的信息则需要准换成XMP或其他格式进行存储。
 
-另外IRB也可以嵌入其他资源，比如[EXIF、IPTC、XMP](https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/#50577409_38034)信息等。
+另外IRB也可以嵌入其他资源，比如[EXIF、IPTC、XMP](https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/#50577409_38034)
+信息等。
+
+严格上来说不应该叫这个名称，应该叫PSD(Photoshop Document)
 
 ---
 
 ## 🧩 一、JPEG 文件的总体层级结构
 
 在说IRB之前先认识JPEG文件的总体层级结构。
+
+![jpeg.png](image/jpeg.png)
+
+提示: 关注`Image Resources`不分即可。
+
+来自：https://exiv2.org/book/index.html#JPEG
 
 JPEG 是一种 **分段结构的文件格式**，每个段由一个“标记（Marker）”开头，用来描述不同类型的数据。很多我们常见的元数据（EXIF、IPTC、XMP、ICC、IRB、Photoshop
 Info）都不是随意放进文件里的，而是嵌入在这些**特定标记段**中。
@@ -45,6 +54,8 @@ JPEG 文件是由若干个 **Segment（段）** 组成的，基本结构如下�
 | EOI (End of Image)                         |  ← 文件结束标记 (0xFFD9)
 +--------------------------------------------+
 ```
+
+其中每个段在最新jpeg的标准中不能超过64k大小，
 
 下面是一张逻辑结构层级图（文字版）：
 
@@ -146,6 +157,10 @@ APP2 (0xFFE2)
 - 其中 **Resource ID = 0x0404** 是 IPTC-NAA 数据块
 
 ### 3.基本结构
+
+![psd.png](image/psd.png)
+
+图片来自: https://exiv2.org/book/index.html#PSD
 
 以下是单个IRB数据块的基本单元结构：
 
@@ -286,6 +301,7 @@ xx xx xx ...                   ; Photoshop Info data (key/value pairs)
 ## 四、代码
 
 golang解析库，虽不全面但可参考
+
 - https://github.com/dsoprea/go-photoshop-info-format
 
 ## 五、扩展
@@ -637,4 +653,5 @@ export default JPEGStructure;
 
 ## 参考
 
+- https://exiv2.org/book/index.html#PSD
 - https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/#50577409_69883 官方文档`Image Resources Section`部分

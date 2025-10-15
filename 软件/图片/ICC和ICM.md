@@ -51,6 +51,8 @@ ICC 定义了一种称为 **ICC Profile（色彩描述文件）** 的标准格�
 * Windows 系统喜欢用 `.icm`；
 * macOS / Adobe 等系统喜欢用 `.icc`。
 
+ICC 配置文件是也 TIFF 图像标准系列的成员之一。它包含一个文件头、一个“标签”目录以及标签值。
+
 ---
 
 ## 📦 三、ICC Profile 文件内部结构
@@ -178,3 +180,7 @@ ICC Profile 是一种非常规范的二进制文件格式，内部 Tag 数据类
 
 > **ICC 是“标准”，ICM 是“实现”。**
 > ICC 定义了如何描述颜色，ICM 负责让颜色在不同设备间保持一致。
+
+## 参考
+
+- https://www.color.org/icc_specs2.xalter 规范
